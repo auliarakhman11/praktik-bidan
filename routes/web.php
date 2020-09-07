@@ -14,12 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::middleware('role:admin')->get('/dashboard', function(){
-    return 'Dashboard';
-})->name('dashboard');
+// Route::middleware('role:admin')->get('/dashboard', function(){
+//     return 'Dashboard';
+// })->name('dashboard');
+
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('/dashboard', 'DashboardController@index');
+});
+    Route::get('/pasien', 'PasienController@index');
+
