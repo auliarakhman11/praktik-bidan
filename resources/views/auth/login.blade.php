@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="{{asset('auth')}}/images/icons/favicon.ico"/>
+	<link rel="icon" type="image/png" href="{{asset('adminlte')}}/dist/img/IBI.png"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{asset('auth')}}/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
@@ -27,7 +27,7 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
-					<img src="{{asset('auth')}}/images/img-01.png" alt="IMG">
+					<img src="{{asset('adminlte')}}/dist/img/IBI.png" alt="IMG">
 				</div>
 
                 <form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
@@ -37,7 +37,7 @@
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                        <input id="email" class="input100 @error('email') is-invalid @enderror" type="email" name="email" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        <input id="email" class="input100 @error('email') is-invalid @enderror" type="email" name="email" placeholder="Email" value="{{ old('email') }}"  autocomplete="email" autofocus>
                         
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
@@ -46,7 +46,7 @@
                     </div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-                        <input id="password" class="input100 @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password" required autocomplete="current-password">
+                        <input id="password" class="input100 @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password"  autocomplete="current-password">
 
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
@@ -54,10 +54,10 @@
                         </span>                        
                     </div>
                     @error('password')
-                    <small class="text-danger ml-2">{{ $message }}</small>
+                    <small class="text-danger ml-1">{{ $message }}</small>
                     @enderror
                     @error('email')
-                    <small class="text-danger ml-2">{{ $message }}</small>
+                    <small class="text-danger ml-1">{{ $message }}</small>
                     @enderror
                     
                     <div class="form-group row container-login100-form-btn wrap-input100 ml-3">

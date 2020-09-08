@@ -27,5 +27,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/dashboard', 'DashboardController@index');
 });
+
+Route::group(['middleware' => ['role:admin|user']], function(){
     Route::get('/pasien', 'PasienController@index');
+    Route::get('/persalinan', 'PersalinanController@index');
+    Route::get('/imunisasi', 'ImunisasiController@index');
+    Route::get('/kb', 'KbController@index');
+});
+    
 
