@@ -24,7 +24,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-
+        <livewire:pasien-index></livewire:pasien-index>
       </div><!--/. container-fluid -->
     </section>
     <!-- /.content -->
