@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Pasien;
 use Illuminate\Http\Request;
 
 class PasienController extends Controller
@@ -25,4 +26,15 @@ class PasienController extends Controller
     {
         return view('user.pasien');
     }
+
+    // public function getKb(){
+    //     $kb = Pasien::join('contacts', 'users.id', '=', 'contacts.user_id')
+    //     ->join('orders', 'users.id', '=', 'orders.user_id')
+    //     ->select('users.*', 'contacts.phone', 'orders.price')
+    //     ->get();
+            
+        
+
+    //     dd($kb);
+    // }
 }

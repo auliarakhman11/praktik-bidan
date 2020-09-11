@@ -8,7 +8,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">KB</h1>
+            <h1 class="m-0 text-dark">Periksa</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -24,7 +24,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <input type="text" class="form-control float-right" id="reservationtime">
+
       </div><!--/. container-fluid -->
     </section>
     <!-- /.content -->

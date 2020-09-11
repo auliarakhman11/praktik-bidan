@@ -14,7 +14,7 @@ class CreateKbTable extends Migration
     public function up()
     {
         Schema::create('kb', function (Blueprint $table) {
-            $table->mediumIncrements('id');
+            $table->smallIncrements('id');
             $table->smallInteger('pasien_id');
             $table->smallInteger('users_id');
             $table->char('askeptor',4);

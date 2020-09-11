@@ -33,6 +33,8 @@ Route::group(['middleware' => ['role:admin|user']], function(){
     Route::get('/persalinan', 'PersalinanController@index');
     Route::get('/imunisasi', 'ImunisasiController@index');
     Route::get('/kb', 'KbController@index');
+    Route::get('/test','KbController@relation');
+    Route::get('/pemeriksaan','PeriksaController@index');
 });
     
 

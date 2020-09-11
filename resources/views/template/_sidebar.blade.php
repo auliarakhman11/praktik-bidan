@@ -31,19 +31,20 @@
             </a>
           </li>
           @endhasrole
+          @hasrole('admin|user')
         <li class="nav-header">PENANGANAN</li>          
 
         <li class="nav-item">
           <a href="/pasien" class="nav-link {{ Request::path() === 'pasien' ? 'active' : '' }}">
-            <i class="nav-icon fas fas fa-procedures"></i>
+            <i class="fas fa-hospital-user"></i>
             <p>
               Pasien
             </p>
           </a>
         </li>
 
-            <li class="nav-item has-treeview {{ Request::is(['persalinan','kb','imunisasi']) ? 'menu-open' : '' }}">
-            <a href="#" class="nav-link {{ Request::is(['persalinan','kb','imunisasi']) ? 'active' : '' }}">
+            <li class="nav-item has-treeview {{ Request::is(['persalinan','kb','imunisasi','pemeriksaan']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ Request::is(['persalinan','kb','imunisasi','pemeriksaan']) ? 'active' : '' }}">
               <i class="fas fa-table"></i>
               <p>
                 Table
@@ -53,7 +54,7 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="/persalinan" class="nav-link {{ Request::is('persalinan') ? 'active' : '' }}">
-                  <i class="fas fa-baby"></i>
+                  <i class="nav-icon fas fas fa-procedures"></i>
                   <p>Persalinan</p>
                 </a>
               </li>
@@ -69,7 +70,14 @@
                   <p>KB</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/pemeriksaan" class="nav-link {{ Request::is('pemeriksaan') ? 'active' : '' }}">
+                  <i class="fas fa-baby"></i>
+                  <p>Periksa Kehamilan</p>
+                </a>
+              </li>
             </ul>
+            @endhasrole
           </li>
 
 
