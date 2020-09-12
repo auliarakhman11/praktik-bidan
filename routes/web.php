@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('user.login');
-});
 
 Auth::routes();
 
@@ -29,6 +26,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 });
 
 Route::group(['middleware' => ['role:admin|user']], function(){
+    Route::get('/', 'PasienController@index');
     Route::get('/pasien', 'PasienController@index');
     Route::get('/persalinan', 'PersalinanController@index');
     Route::get('/imunisasi', 'ImunisasiController@index');
