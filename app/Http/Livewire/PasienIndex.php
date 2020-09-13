@@ -12,6 +12,7 @@ class PasienIndex extends Component
     protected $paginationTheme = 'bootstrap';
     public $paginate = 5;//nilai default pagitantion
 
+
     //search
     public $foo;
     public $search = '';
@@ -21,6 +22,9 @@ class PasienIndex extends Component
         'search' => ['except' => ''],
         'page' => ['except' => 1],
     ];
+
+    //variable form
+    public $nik_ibu, $nik_ayah, $nm_ibu, $nm_ayah, $tgl_lahir_ibu, $tgl_lahir_ayah, $no_tlpn, $alamat;
     
 
     public function mount(){
@@ -31,13 +35,52 @@ class PasienIndex extends Component
     {
         return view('livewire.pasien-index',[
             'pasien' => $this->search === null ?
-             Pasien::select('nik_ayah','nik_ibu','nm_ayah','nm_ibu','no_tlpn','alamat','created_at')->paginate($this->paginate) :
-             Pasien::select('nik_ayah','nik_ibu','nm_ayah','nm_ibu','no_tlpn','alamat','created_at')->where('nik_ibu','like', '%'.$this->search.'%')
+             Pasien::select('id','nik_ayah','nik_ibu','nm_ayah','nm_ibu','no_tlpn','alamat','created_at')->paginate($this->paginate) :
+             Pasien::select('id','nik_ayah','nik_ibu','nm_ayah','nm_ibu','no_tlpn','alamat','created_at')->where('id','like', '%'.$this->search.'%')
+             ->orWhere('nik_ibu','like', '%'.$this->search.'%')
              ->orWhere('nm_ibu','like', '%'.$this->search.'%')
              ->orWhere('nik_ayah','like', '%'.$this->search.'%')
              ->orWhere('nm_ayah','like', '%'.$this->search.'%')
              ->paginate($this->paginate)
         ]);
+    }
+
+    public function store(){
+        $this->validate([
+            'nm_ayah' => 'max:30',
+            'nik_ayah' => 'max:30',
+            'nik_ibu' => 'min:3|max:30',
+            'nm_ibu' => 'required|min:3|max:30',
+            'tgl_lahir_ibu' => 'required',
+            'no_tlpn' => 'max:13',
+            'alamat' => 'max:30',
+        ]);
+
+        Pasien::create([
+            "nik_ayah" => $this->nik_ayah,
+            "nik_ibu" => $this->nik_ibu,
+            "nm_ayah" => $this->nm_ayah,
+            "nm_ibu" => $this->nm_ibu,
+            "tgl_lahir_ayah" => $this->tgl_lahir_ayah,
+            "tgl_lahir_ibu" => $this->tgl_lahir_ibu,
+            "no_tlpn" => $this->no_tlpn,
+            "alamat" => $this->alamat
+        ]);
+
+        $this->resetInput();//panggil methodnya
+        $this->emit('pasienStored');
+        session()->flash('message', 'Data pasien berhasil ditambahkan');     
+    }
+
+    private function resetInput(){// function agar mengkosongkan form input
+        $this->nik_ayah = null;
+        $this->nik_ibu = null;
+        $this->nm_ayah = null;
+        $this->nm_ibu = null;
+        $this->tgl_lahir_ayah = null;
+        $this->tgl_lahir_ibu = null;
+        $this->no_tlpn = null;
+        $this->alamat = null;
     }
     
 }

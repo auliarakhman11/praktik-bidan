@@ -42,6 +42,8 @@
     </div>
   </footer>
 </div>
+@livewireScripts
+@yield('footer')
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
@@ -68,6 +70,5 @@
 
 <!-- PAGE SCRIPTS -->
 <script src="{{asset('adminlte')}}/dist/js/pages/dashboard2.js"></script>
-@livewireScripts
 </body>
 </html>

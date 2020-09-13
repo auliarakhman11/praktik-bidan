@@ -35,7 +35,7 @@
         <li class="nav-header">PENANGANAN</li>          
 
         <li class="nav-item">
-          <a href="/pasien" class="nav-link {{ Request::path() === 'pasien' ? 'active' : '' }}">
+          <a href="/pasien" class="nav-link {{ Request::path() === 'pasien' || 'pasien?' ? 'active' : '' }}">
             <i class="fas fa-hospital-user"></i>
             <p>
               Pasien
