@@ -9,6 +9,9 @@
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{asset('adminlte')}}/plugins/fontawesome-free/css/all.min.css">
+  {{-- <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="{{asset('adminlte')}}/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"> --}}
+  @yield('swalcss')
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{{asset('adminlte')}}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
@@ -43,7 +46,6 @@
   </footer>
 </div>
 @livewireScripts
-@yield('footer')
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
@@ -53,6 +55,9 @@
 <script src="{{asset('adminlte')}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="{{asset('adminlte')}}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+@yield('swaljs')
+{{-- <!-- SweetAlert2 -->
+<script src="{{asset('adminlte')}}/plugins/sweetalert2/sweetalert2.min.js"></script> --}}
 <!-- AdminLTE App -->
 <script src="{{asset('adminlte')}}/dist/js/adminlte.js"></script>
 
@@ -70,5 +75,16 @@
 
 <!-- PAGE SCRIPTS -->
 <script src="{{asset('adminlte')}}/dist/js/pages/dashboard2.js"></script>
+{{-- <script type="text/javascript">
+Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      icon: 'success',
+        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+})
+</script> --}}
+@yield('footer')
 </body>
 </html>

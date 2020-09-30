@@ -24,7 +24,7 @@ class PasienIndex extends Component
     ];
 
     //variable form
-    public $nik_ibu, $nik_ayah, $nm_ibu, $nm_ayah, $tgl_lahir_ibu, $tgl_lahir_ayah, $no_tlpn, $alamat;
+    public $pasienId,$nik_ibu, $nik_ayah, $nm_ibu, $nm_ayah, $tgl_lahir_ibu, $tgl_lahir_ayah, $no_tlpn, $alamat;
     
 
     public function mount(){
@@ -68,11 +68,10 @@ class PasienIndex extends Component
         ]);
 
         $this->resetInput();//panggil methodnya
-        $this->emit('pasienStored');
-        session()->flash('message', 'Data pasien berhasil ditambahkan');     
+        $this->emit('pasienStored');   
     }
 
-    private function resetInput(){// function agar mengkosongkan form input
+    public function resetInput(){// function agar mengkosongkan form input
         $this->nik_ayah = null;
         $this->nik_ibu = null;
         $this->nm_ayah = null;
@@ -82,5 +81,52 @@ class PasienIndex extends Component
         $this->no_tlpn = null;
         $this->alamat = null;
     }
+
+    public function getPasien($id){
+        $pasien = Pasien::find($id);
+        $this->pasienId = $pasien['id'];
+        $this->nik_ayah = $pasien['nik_ayah'];
+        $this->nik_ibu = $pasien['nik_ibu'];
+        $this->nm_ayah = $pasien['nm_ayah'];
+        $this->nm_ibu = $pasien['nm_ibu'];
+        $this->tgl_lahir_ayah = $pasien['tgl_lahir_ayah'];
+        $this->tgl_lahir_ibu = $pasien['tgl_lahir_ibu'];
+        $this->no_tlpn = $pasien['no_tlpn'];
+        $this->alamat = $pasien['alamat'];
+    }
+
+    public function deletePasien($pasienId){
+        $data = Pasien::find($pasienId);
+        $data->delete();
+        $this->emit('pasienDeleted'); 
+    }
     
+    public function update(){
+        $this->validate([
+            'nm_ayah' => 'max:30',
+            'nik_ayah' => 'max:30',
+            'nik_ibu' => 'min:3|max:30',
+            'nm_ibu' => 'required|min:3|max:30',
+            'tgl_lahir_ibu' => 'required',
+            'no_tlpn' => 'max:13',
+            'alamat' => 'max:30',
+        ]);
+        
+        if($this->pasienId){
+            $contact = Pasien::find($this->pasienId);
+            $contact->update([
+            "nik_ayah" => $this->nik_ayah,
+            "nik_ibu" => $this->nik_ibu,
+            "nm_ayah" => $this->nm_ayah,
+            "nm_ibu" => $this->nm_ibu,
+            "tgl_lahir_ayah" => $this->tgl_lahir_ayah,
+            "tgl_lahir_ibu" => $this->tgl_lahir_ibu,
+            "no_tlpn" => $this->no_tlpn,
+            "alamat" => $this->alamat
+            ]);
+
+            $this->resetInput();
+            $this->emit('pasienUpdated');
+        }
+    }
 }
