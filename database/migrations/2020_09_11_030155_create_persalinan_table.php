@@ -16,6 +16,7 @@ class CreatePersalinanTable extends Migration
         Schema::create('persalinan', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('pasien_id');
+            $table->foreign('pasien_id')->references('id')->on('pasien')->onDelete('cascade');
             $table->unsignedSmallInteger('users_id');
             $table->date('tgl_lahir');
             $table->string('jam_lahir',30);

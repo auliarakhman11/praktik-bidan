@@ -16,6 +16,7 @@ class CreatePemeriksaanTable extends Migration
         Schema::create('pemeriksaan', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('pasien_id');
+            $table->foreign('pasien_id')->references('id')->on('pasien')->onDelete('cascade');
             $table->unsignedSmallInteger('users_id');
             $table->string('no_kk')->nullable();
             $table->unsignedTinyInteger('g');

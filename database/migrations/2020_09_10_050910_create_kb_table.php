@@ -15,7 +15,8 @@ class CreateKbTable extends Migration
     {
         Schema::create('kb', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->smallInteger('pasien_id');
+            $table->unsignedSmallInteger('pasien_id');
+            $table->foreign('pasien_id')->references('id')->on('pasien')->onDelete('cascade');
             $table->smallInteger('users_id');
             $table->char('askeptor',4);
             $table->tinyInteger('umur_ibu');

@@ -23,9 +23,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <input type="text" class="form-control float-right" id="reservationtime">
-      </div><!--/. container-fluid -->
+
     </section>
     <!-- /.content -->
   </div>

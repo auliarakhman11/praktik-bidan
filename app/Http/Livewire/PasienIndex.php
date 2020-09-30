@@ -35,8 +35,8 @@ class PasienIndex extends Component
     {
         return view('livewire.pasien-index',[
             'pasien' => $this->search === null ?
-             Pasien::select('id','nik_ayah','nik_ibu','nm_ayah','nm_ibu','no_tlpn','alamat','created_at')->paginate($this->paginate) :
-             Pasien::select('id','nik_ayah','nik_ibu','nm_ayah','nm_ibu','no_tlpn','alamat','created_at')->where('id','like', '%'.$this->search.'%')
+             Pasien::select('id','kd_pasien','nik_ayah','nik_ibu','nm_ayah','nm_ibu','no_tlpn','alamat','created_at')->paginate($this->paginate) :
+             Pasien::select('id','kd_pasien','nik_ayah','nik_ibu','nm_ayah','nm_ibu','no_tlpn','alamat','created_at')->where('kd_pasien','like', '%'.$this->search.'%')
              ->orWhere('nik_ibu','like', '%'.$this->search.'%')
              ->orWhere('nm_ibu','like', '%'.$this->search.'%')
              ->orWhere('nik_ayah','like', '%'.$this->search.'%')
@@ -49,9 +49,8 @@ class PasienIndex extends Component
         $this->validate([
             'nm_ayah' => 'max:30',
             'nik_ayah' => 'max:30',
-            'nik_ibu' => 'min:3|max:30',
+            'nik_ibu' => 'max:30',
             'nm_ibu' => 'required|min:3|max:30',
-            'tgl_lahir_ibu' => 'required',
             'no_tlpn' => 'max:13',
             'alamat' => 'max:30',
         ]);
@@ -105,9 +104,8 @@ class PasienIndex extends Component
         $this->validate([
             'nm_ayah' => 'max:30',
             'nik_ayah' => 'max:30',
-            'nik_ibu' => 'min:3|max:30',
+            'nik_ibu' => 'max:30',
             'nm_ibu' => 'required|min:3|max:30',
-            'tgl_lahir_ibu' => 'required',
             'no_tlpn' => 'max:13',
             'alamat' => 'max:30',
         ]);

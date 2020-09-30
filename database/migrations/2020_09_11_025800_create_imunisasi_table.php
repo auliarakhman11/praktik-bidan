@@ -16,6 +16,7 @@ class CreateImunisasiTable extends Migration
         Schema::create('imunisasi', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('pasien_id');
+            $table->foreign('pasien_id')->references('id')->on('pasien')->onDelete('cascade');
             $table->unsignedSmallInteger('users_id');
             $table->string('nm_anak',30)->nullable();
             $table->date('tgl_lahir');
