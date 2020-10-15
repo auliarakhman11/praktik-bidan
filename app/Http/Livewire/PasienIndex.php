@@ -34,13 +34,14 @@ class PasienIndex extends Component
     public function render()
     {
         return view('livewire.pasien-index',[
-            'pasien' => $this->search === null ?
-             Pasien::select('id','kd_pasien','nik_ayah','nik_ibu','nm_ayah','nm_ibu','no_tlpn','alamat','created_at')->paginate($this->paginate) :
+            'pasien' => empty($this->search) ?
+             Pasien::select('id','kd_pasien','nik_ayah','nik_ibu','nm_ayah','nm_ibu','no_tlpn','alamat','created_at')->orderBy('id','desc')->paginate($this->paginate) :
              Pasien::select('id','kd_pasien','nik_ayah','nik_ibu','nm_ayah','nm_ibu','no_tlpn','alamat','created_at')->where('kd_pasien','like', '%'.$this->search.'%')
              ->orWhere('nik_ibu','like', '%'.$this->search.'%')
              ->orWhere('nm_ibu','like', '%'.$this->search.'%')
              ->orWhere('nik_ayah','like', '%'.$this->search.'%')
              ->orWhere('nm_ayah','like', '%'.$this->search.'%')
+             ->orderBy('id','desc')
              ->paginate($this->paginate)
         ]);
     }

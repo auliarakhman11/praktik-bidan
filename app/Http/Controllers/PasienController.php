@@ -24,7 +24,25 @@ class PasienController extends Controller
      */
     public function index()
     {
-        return view('user.pasien');
+        return view('user.pasien',['title' => 'Pasien']);
+    }
+
+    public function detail(Pasien $d)
+    {
+        return view('user.detailPasien', ['pasien' => $d, 'title' => 'Detail Pasien']);
+    }
+
+    public function edit(Request $request){
+        if(!empty($request->id)){
+            $pasien = Pasien::find($request->id);
+            $pasien->update([
+                "nm_ibu" => $request->nm_ibu,
+                "nm_ayah" => $request->nm_ayah,
+                "no_tlpn" => $request->no_tlpn,
+                "alamat" => $request->alamat
+            ]);
+            return redirect()->back()->with('edit', 'Data Pasien Berhasil Diedit');
+        }
     }
 
     // public function getKb(){

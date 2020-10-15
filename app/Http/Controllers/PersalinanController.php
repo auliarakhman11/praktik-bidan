@@ -23,6 +23,6 @@ class PersalinanController extends Controller
      */
     public function index()
     {
-        return view('user.persalinan');
+        return view('user.persalinan',['title' => 'Persalinan']);
     }
 }

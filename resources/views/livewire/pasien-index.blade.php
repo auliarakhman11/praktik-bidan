@@ -60,7 +60,7 @@
                     <button wire:click="getPasien({{ $d->id }}) type="button" class="btn btn-sm btn-info text-light mb-1" data-toggle="modal" data-target="#updatePasien">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <a href="" class="btn btn-sm btn-primary text-light mb-1"><i class="fas fa-search"></i></a>
+                    <a href="/pasien/{{$d->id}}/detail" class="btn btn-sm btn-primary text-light mb-1"><i class="fas fa-search"></i></a>
                     <button wire:click="getPasien({{ $d->id }}) type="button" class="btn btn-sm btn-danger text-light mb-1" data-toggle="modal" data-target="#delete">
                         <i class="fas fa-trash"></i>
                     </button>

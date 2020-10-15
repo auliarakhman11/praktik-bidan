@@ -25,7 +25,7 @@ class Pasien extends Model
         return [
             'kd_pasien' => [
                 'format' => function () {
-                    return 'PS/' . date('m.Y') . '/?'; 
+                    return 'PS' . '?'; 
                 }, // Format kode yang akan digunakan.
                 'length' => 5 // Jumlah digit yang akan digunakan sebagai nomor urut
             ]

@@ -23,6 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/dashboard', 'DashboardController@index');
+    Route::get('/users','UsersController@index');
 });
 
 Route::group(['middleware' => ['role:admin|user']], function(){
@@ -31,8 +32,11 @@ Route::group(['middleware' => ['role:admin|user']], function(){
     Route::get('/persalinan', 'PersalinanController@index');
     Route::get('/imunisasi', 'ImunisasiController@index');
     Route::get('/kb', 'KbController@index');
-    Route::get('/test','KbController@relation');
     Route::get('/pemeriksaan','PeriksaController@index');
+    Route::get('/pasien/{d}/detail', 'PasienController@detail');
+    Route::post('/pasien/edit', 'PasienController@edit');
+    Route::get('account/password','AccountController@password')->name('password.edit');
+    Route::patch('account/password','AccountController@update')->name('password.edit');
 });
     
 

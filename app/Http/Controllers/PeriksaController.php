@@ -19,6 +19,6 @@ class PeriksaController extends Controller
      */
     public function index()
     {
-        return view('user.periksa');
+        return view('user.periksa',['title' => 'Periksa Kehamilan']);
     }
 }
