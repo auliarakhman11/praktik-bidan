@@ -12,12 +12,12 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">KB</h1>
+        <div class="row mb-1">
+          <div class="col-6">
+            <h1 class="m-0 text-dark float-left">KB</h1>
           </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
+          <div class="col-6">
+            <ol class="breadcrumb float-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">Dashboard v2</li>
             </ol>
@@ -30,6 +30,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
+        <a href="/printkb" class="btn btn-warning mb-1"><i class="fas fa-print"></i> Print</a>
         @livewire('kb-index', ['users_id' => Auth::user()->id])
       </div>
     </section>

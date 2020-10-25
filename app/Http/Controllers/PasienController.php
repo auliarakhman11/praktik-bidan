@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Notification;
 use App\Pasien;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class PasienController extends Controller
 {
@@ -27,9 +29,10 @@ class PasienController extends Controller
         return view('user.pasien',['title' => 'Pasien']);
     }
 
-    public function detail(Pasien $d)
+    public function detail($id)
     {
-        return view('user.detailPasien', ['pasien' => $d, 'title' => 'Detail Pasien']);
+        $pasien = Pasien::find(Crypt::decrypt($id));
+        return view('user.detailPasien', ['pasien' => $pasien, 'title' => 'Detail Pasien']);
     }
 
     public function edit(Request $request){
@@ -43,6 +46,21 @@ class PasienController extends Controller
             ]);
             return redirect()->back()->with('edit', 'Data Pasien Berhasil Diedit');
         }
+    }
+
+    public function notification(){
+        request()->validate([
+            'pasien_id' => ['required'],
+            'ket' => ['required', 'max:128'],
+            'tgl' => ['required']
+        ]);
+        Notification::create([
+            'pasien_id' => request('pasien_id'),
+            'ket' => request('ket'),
+            'tgl' => request('tgl')
+        ]);
+
+        return redirect()->back()->with('success' , 'Data pengingat berhasil dibuat');
     }
 
     // public function getKb(){

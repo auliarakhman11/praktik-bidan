@@ -9,5 +9,5 @@ class Imunisasi extends Model
 {
     use HasRoles;
     protected $table = 'imunisasi';
-    protected $fillable = ['pasien_id','users_id','nm_anak','tgl_lahir','umur','jns_imunisasi','bb','pb'];
+    protected $fillable = ['pasien_id','users_id','nm_anak','tgl_lahir','umur','jns_imunisasi','bb','pb','status'];
 }

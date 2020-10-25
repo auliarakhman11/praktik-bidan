@@ -35,6 +35,14 @@
                                 {{session('edit')}}
                             </div>
          @endif
+         @if(session('success'))
+                            <div class="alert alert-info" role="alert">
+                                {{session('success')}}
+                            </div>
+         @endif
+         <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#insertnotification">
+          Tambah Pengingat
+         </button>
         <div class="row mb-2">
           <div class="col-6">
             <form action="/pasien/edit" method="POST">
@@ -100,6 +108,57 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+         <!-- Modal Insert -->
+         <div class="modal fade" id="insertnotification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+              <div class="modal-content">
+                  <div class="modal-header bg-gradient-purple">
+                      <h5 class="modal-title" id="exampleModalLabel">Form Notification</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true close-btn">×</span>
+                      </button>
+                  </div>
+                 <div class="modal-body">
+                      <form method="POST" action="/pasien/notification">
+                        @csrf
+                        <input type="hidden" name="pasien_id" value="{{ $pasien->id }}">
+                          <div class="row">
+                              <div class="col-12">
+                               <div class="form-group">
+                                   <label for="exampleFormControlInput2" class="text-purple">Keterangan</label>
+                                   <input type="text" name="ket" id="" class="form-control border-primary text-purple @error('ket') is-invalid @enderror" placeholder="Keterangan">
+                                    @error('ket')
+                                        <span class="invalid feedback">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                               </div>
+                              </div>
+                              <div class="col-12">
+                               <div class="form-group">
+                                   <label for="exampleFormControlInput1" class="text-purple">Tanggal</label>
+                                   <input type="date" name="tgl" id="" class="form-control border-primary text-purple @error('tgl') is-invalid @enderror" placeholder="Tanggal">
+                                    @error('tgl')
+                                        <span class="invalid feedback">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                               </div>
+                              </div>
+
+                          </div>
+                          
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Close</button>
+                      <button type="submit"  class="btn btn-primary close-modal">Insert</button>
+                   </form>
+                   
+                  </div>
+              </div>
+          </div>
+      </div>
+
 
   @section('swaljs')
     <!-- SweetAlert2 -->

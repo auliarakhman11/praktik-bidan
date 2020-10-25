@@ -118,7 +118,7 @@
                                         <label for="exampleFormControlInput2" class="text-purple">Nama Anak</label>
                                         <input wire:model="nm_anak" type="text" name="nm_anak" id="" class="form-control border-primary text-purple @error('nm_anak') is-invalid @enderror" placeholder="Nama Anak">
                                          @error('nm_anak')
-                                             <span class="invalid feedback">
+                                             <span class="invalid-feedback">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                          @enderror
@@ -129,7 +129,7 @@
                                         <label for="exampleFormControlInput1" class="text-purple">Tanggl Lahir</label>
                                         <input wire:model="tgl_lahir" type="date" name="tgl_lahir" id="" class="form-control border-primary text-purple @error('tgl_lahir') is-invalid @enderror" placeholder="Tanggl Lahir">
                                          @error('tgl_lahir')
-                                             <span class="invalid feedback">
+                                             <span class="invalid-feedback">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                          @enderror
@@ -140,7 +140,7 @@
                                         <label for="exampleFormControlInput1" class="text-purple">Umur</label>
                                         <input wire:model="umur" type="text" name="umur" id="" class="form-control border-primary text-purple @error('umur') is-invalid @enderror" placeholder="Umur">
                                          @error('umur')
-                                             <span class="invalid feedback">
+                                             <span class="invalid-feedback">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                          @enderror
@@ -170,7 +170,7 @@
                                             <option value="Polio 4">Polio 4</option>
                                           </select>
                                          @error('jns_imunisasi')
-                                             <span class="invalid feedback">
+                                             <span class="invalid-feedback">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                          @enderror
@@ -181,7 +181,7 @@
                                         <label for="exampleFormControlInput1" class="text-purple">BB</label>
                                         <input wire:model="bb" type="text" name="bb" id="" class="form-control border-primary text-purple @error('bb') is-invalid @enderror" placeholder="BB">
                                          @error('bb')
-                                             <span class="invalid feedback">
+                                             <span class="invalid-feedback">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                          @enderror
@@ -190,9 +190,9 @@
                                    <div class="col-6">
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1" class="text-purple">PB</label>
-                                        <input wire:model="pb" type="text" name="pb" id="" class="form-control border-primary text-purple @error('pb') is-invalid @enderror" placeholder="PB">
+                                        <input wire:model="pb" type="number" name="pb" id="" class="form-control border-primary text-purple @error('pb') is-invalid @enderror" placeholder="PB">
                                          @error('pb')
-                                             <span class="invalid feedback">
+                                             <span class="invalid-feedback">
                                                  <strong>{{ $message }}</strong>
                                              </span>
                                          @enderror
@@ -277,7 +277,7 @@
                                      <label for="exampleFormControlInput2" class="text-purple">Nama Anak</label>
                                      <input wire:model="nm_anak" type="text" name="nm_anak" id="" class="form-control border-primary text-purple @error('nm_anak') is-invalid @enderror" placeholder="Nama Anak">
                                       @error('nm_anak')
-                                          <span class="invalid feedback">
+                                          <span class="invalid-feedback">
                                               <strong>{{ $message }}</strong>
                                           </span>
                                       @enderror
@@ -288,7 +288,7 @@
                                      <label for="exampleFormControlInput1" class="text-purple">Tanggl Lahir</label>
                                      <input wire:model="tgl_lahir" type="date" name="tgl_lahir" id="" class="form-control border-primary text-purple @error('tgl_lahir') is-invalid @enderror" placeholder="Tanggl Lahir">
                                       @error('tgl_lahir')
-                                          <span class="invalid feedback">
+                                          <span class="invalid-feedback">
                                               <strong>{{ $message }}</strong>
                                           </span>
                                       @enderror
@@ -299,7 +299,7 @@
                                      <label for="exampleFormControlInput1" class="text-purple">Umur</label>
                                      <input wire:model="umur" type="text" name="umur" id="" class="form-control border-primary text-purple @error('umur') is-invalid @enderror" placeholder="Umur">
                                       @error('umur')
-                                          <span class="invalid feedback">
+                                          <span class="invalid-feedback">
                                               <strong>{{ $message }}</strong>
                                           </span>
                                       @enderror
@@ -328,7 +328,7 @@
                                          <option value="Polio 4">Polio 4</option>
                                        </select>
                                       @error('jns_imunisasi')
-                                          <span class="invalid feedback">
+                                          <span class="invalid-feedback">
                                               <strong>{{ $message }}</strong>
                                           </span>
                                       @enderror
@@ -339,7 +339,7 @@
                                      <label for="exampleFormControlInput1" class="text-purple">BB</label>
                                      <input wire:model="bb" type="text" name="bb" id="" class="form-control border-primary text-purple @error('bb') is-invalid @enderror" placeholder="BB">
                                       @error('bb')
-                                          <span class="invalid feedback">
+                                          <span class="invalid-feedback">
                                               <strong>{{ $message }}</strong>
                                           </span>
                                       @enderror
@@ -348,9 +348,9 @@
                                 <div class="col-6">
                                  <div class="form-group">
                                      <label for="exampleFormControlInput1" class="text-purple">PB</label>
-                                     <input wire:model="pb" type="text" name="pb" id="" class="form-control border-primary text-purple @error('pb') is-invalid @enderror" placeholder="PB">
+                                     <input wire:model="pb" type="number" name="pb" id="" class="form-control border-primary text-purple @error('pb') is-invalid @enderror" placeholder="PB">
                                       @error('pb')
-                                          <span class="invalid feedback">
+                                          <span class="invalid-feedback">
                                               <strong>{{ $message }}</strong>
                                           </span>
                                       @enderror

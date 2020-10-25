@@ -35,20 +35,36 @@ class ImunisasiIndex extends Component
                 'nm_ayah' => $this->nm_ayah,
                 'no_tlpn' => $this->no_tlpn,
                 'alamat' => $this->alamat,
-                'imunisasi' => Imunisasi::select('id', 'nm_anak', 'tgl_lahir', 'umur', 'jns_imunisasi', 'bb', 'pb')->where('pasien_id', $this->pasienId)->orderBy('id', 'desc')->paginate($this->paginate)
+                'imunisasi' => Imunisasi::select('id', 'nm_anak', 'tgl_lahir', 'umur', 'jns_imunisasi', 'bb', 'pb','imunisasi.created_at')->where([['pasien_id','=', $this->pasienId],['imunisasi.status','=','0']])->orderBy('id', 'desc')->paginate($this->paginate)
             ]);
         }else{
             return view('livewire.imunisasi-index', [
-                'imunisasi' => Imunisasi::join('pasien', 'pasien.id', '=', 'imunisasi.pasien_id')->select('imunisasi.id', 'nm_ibu','kd_pasien', 'nm_anak', 'tgl_lahir', 'umur', 'jns_imunisasi', 'bb', 'pb')->where('kd_pasien','like', '%'.$this->search.'%')->orWhere('nm_ibu','like', '%'.$this->search.'%')->orWhere('nm_ayah','like', '%'.$this->search.'%')->orderBy('imunisasi.id', 'desc')->paginate($this->paginate)
+                'imunisasi' => empty($this->search) ?
+                 Imunisasi::join('pasien', 'pasien.id', '=', 'imunisasi.pasien_id')->select('imunisasi.id', 'nm_ibu','kd_pasien', 'nm_anak', 'tgl_lahir', 'umur', 'jns_imunisasi', 'bb', 'pb','imunisasi.created_at')->where('imunisasi.status','0')
+                 ->orderBy('imunisasi.id', 'desc')->paginate($this->paginate):
+                 Imunisasi::join('pasien', 'pasien.id', '=', 'imunisasi.pasien_id')->select('imunisasi.id', 'nm_ibu','kd_pasien', 'nm_anak', 'tgl_lahir', 'umur', 'jns_imunisasi', 'bb', 'pb','imunisasi.created_at')->where('kd_pasien','like', '%'.$this->search.'%')->orWhere('nm_ibu','like', '%'.$this->search.'%')->orWhere('nm_ayah','like', '%'.$this->search.'%')
+                 ->orWhere('nm_anak','like', '%'.$this->search.'%')
+                 ->orderBy('imunisasi.id', 'desc')->paginate($this->paginate)
             ]);
         }
     }
 
     public function store(){
+        $message = [
+            'required' => 'Inputan tidak boleh kosong',
+            'pb.max' => 'Inputan numeric dari 1 - 254',
+            'max' => 'Maksimal hanya :max karakter',
+            'numeric' => 'Inputan harus berupa angka',
+            'date' => 'Inputan harus berupa tanggal'
+        ];
         $this->validate([
-            'nm_anak' => 'required',
-            'jns_imunisasi' => 'required'
-        ]);
+            "nm_anak" => 'required|max:30',
+            "tgl_lahir" => 'required|date',
+            "umur" => 'required|max:10',
+            "jns_imunisasi" => 'required|max:30',
+            "bb" => 'required|max:10',
+            "pb" => 'required|max:254|numeric'
+        ], $message);
 
         Imunisasi::create([
             "users_id" => $this->users_id,
@@ -87,16 +103,31 @@ class ImunisasiIndex extends Component
 
     public function deleteImunisasi($imunisasiId){
         $data = Imunisasi::find($imunisasiId);
-        $data->delete();
+        $data->update([
+            'status' => '1',
+            'users_id' => $this->users_id
+        ]);
         $this->resetInput();
         $this->emit('imunisasiDeleted'); 
     }
 
     public function update(){
+        $message = [
+            'required' => 'Inputan tidak boleh kosong',
+            'pb.max' => 'Inputan numeric dari 1 - 254',
+            'max' => 'Maksimal hanya :max karakter',
+            'numeric' => 'Inputan harus berupa angka',
+            'date' => 'Inputan harus berupa tanggal'
+            
+        ];
         $this->validate([
-            'nm_anak' => 'required',
-            'jns_imunisasi' => 'required'
-        ]);
+            "nm_anak" => 'required|max:30',
+            "tgl_lahir" => 'required|date',
+            "umur" => 'required|max:10',
+            "jns_imunisasi" => 'required|max:30',
+            "bb" => 'required|max:10',
+            "pb" => 'required|max:254|numeric'
+        ], $message);
         
         if(!empty($this->imunisasiId)){
             $imunisasi = Imunisasi::find($this->imunisasiId);

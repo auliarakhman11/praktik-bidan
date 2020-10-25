@@ -11,7 +11,7 @@ class Pasien extends Model
     use HasRoles;
     use AutoNumberTrait;
     protected $table = 'pasien';
-    protected $fillable = ['kd_pasien','nik_ayah','nik_ibu','nm_ayah','nm_ibu','tgl_lahir_ayah','tgl_lahir_ibu','no_tlpn','alamat'];
+    protected $fillable = ['kd_pasien','nik_ayah','nik_ibu','nm_ayah','nm_ibu','tgl_lahir_ayah','tgl_lahir_ibu','no_tlpn','alamat','status'];
 
     public function kb(){
         // return $this->belongsToMany('App\User','kb','pasien_id','users_id')->withPivot(['umur_ibu']);

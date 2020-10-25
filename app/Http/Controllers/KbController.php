@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Kb;
+use PDF;
 use Illuminate\Http\Request;
 
 class KbController extends Controller
@@ -25,6 +26,12 @@ class KbController extends Controller
     public function index()
     {
         return view('user.kb',['title' => 'KB']);
+    }
+
+    public function print()
+    {
+        $pdf = PDF::loadView('user.printkb')->setPaper('A4','landscape');
+        return $pdf->stream();
     }
 
     // public function relation(){

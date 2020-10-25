@@ -36,21 +36,42 @@ class PersalinanIndex extends Component
                 'nm_ayah' => $this->nm_ayah,
                 'no_tlpn' => $this->no_tlpn,
                 'alamat' => $this->alamat,
-                'persalinan' => Persalinan::select('id', 'tgl_lahir', 'jam_lahir', 'hamil_ke', 'umur_hamil', 'anc_ke', 'letak_janin', 'jenis_persalinan', 'lahir', 'jenkel', 'kembar', 'bb', 'pb', 'lk', 'rujuk')->where('pasien_id', $this->pasienId)->orderBy('id', 'desc')->paginate($this->paginate)
+                'persalinan' => Persalinan::select('id', 'tgl_lahir', 'jam_lahir', 'hamil_ke', 'umur_hamil', 'anc_ke', 'letak_janin', 'jenis_persalinan', 'lahir', 'jenkel', 'kembar', 'bb', 'pb', 'lk', 'rujuk')->where([['pasien_id', '=', $this->pasienId],['persalinan.status','=','0']])->orderBy('persalinan.id', 'desc')->paginate($this->paginate)
             ]);
         }else{
             return view('livewire.persalinan-index', [
-                'persalinan' => Persalinan::join('pasien', 'pasien.id', '=', 'persalinan.pasien_id')->select('persalinan.id','kd_pasien','nm_ibu', 'tgl_lahir', 'jam_lahir', 'hamil_ke', 'umur_hamil', 'anc_ke', 'letak_janin', 'jenis_persalinan', 'lahir', 'jenkel', 'kembar', 'bb', 'pb', 'lk', 'rujuk')->where('kd_pasien','like', '%'.$this->search.'%')->orWhere('nm_ibu','like', '%'.$this->search.'%')->orWhere('nm_ayah','like', '%'.$this->search.'%')->orderBy('persalinan.id', 'desc')->paginate($this->paginate)
+                'persalinan' => empty($this->search) ?
+                 Persalinan::join('pasien', 'pasien.id', '=', 'persalinan.pasien_id')->select('persalinan.id','kd_pasien','nm_ibu', 'tgl_lahir', 'jam_lahir', 'hamil_ke', 'umur_hamil', 'anc_ke', 'letak_janin', 'jenis_persalinan', 'lahir', 'jenkel', 'kembar', 'bb', 'pb', 'lk', 'rujuk')->where('persalinan.status','0')->orderBy('persalinan.id', 'desc')->paginate($this->paginate):
+                 Persalinan::join('pasien', 'pasien.id', '=', 'persalinan.pasien_id')->select('persalinan.id','kd_pasien','nm_ibu', 'tgl_lahir', 'jam_lahir', 'hamil_ke', 'umur_hamil', 'anc_ke', 'letak_janin', 'jenis_persalinan', 'lahir', 'jenkel', 'kembar', 'bb', 'pb', 'lk', 'rujuk')
+                 ->where('kd_pasien','like', '%'.$this->search.'%')->orWhere('nm_ibu','like', '%'.$this->search.'%')->orWhere('nm_ayah','like', '%'.$this->search.'%')
+                 ->orderBy('persalinan.id', 'desc')->paginate($this->paginate)
             ]);
         }
     }
 
     public function store(){
+        $message = [
+            'max' => 'Maksimal hanya :max karakter',
+            'numeric' => 'Inputan harus berupa angka',
+            'date' => 'Inputan harus berupa tanggal',
+            'required' => 'Inputan tidak boleh kosong'
+        ];
         $this->validate([
-            'tgl_lahir' => 'required',
-            'jam_lahir' => 'required',
-            'hamil_ke' => 'required'
-        ]);
+            "anc_ke" => 'max:254|numeric|nullable',
+            "rujuk" => 'max:30',
+            "tgl_lahir" => 'required|date',
+            "jam_lahir" => 'required|max:30',
+            "hamil_ke" => 'required|max:254|numeric',
+            "umur_hamil" => 'required|max:10',
+            "letak_janin" => 'required|max:10',
+            "jenis_persalinan" => 'required|max:10',
+            "lahir" => 'required|max:1',
+            "jenkel" => 'required|max:1',
+            "kembar" => 'required|max:30',
+            "bb" => 'required|max:65500|numeric',
+            "pb" => 'required|max:254|numeric',
+            "lk" => 'required|max:254|numeric'
+        ], $message);
 
         Persalinan::create([
             "users_id" => $this->users_id,
@@ -101,7 +122,7 @@ class PersalinanIndex extends Component
         $this->hamil_ke = $persalinan['hamil_ke'];
         $this->umur_hamil = $persalinan['umur_hamil'];
         $this->anc_ke = $persalinan['anc_ke'];
-        $this->letak_janin = $persalinan['letk_janin'];
+        $this->letak_janin = $persalinan['letak_janin'];
         $this->jenis_persalinan = $persalinan['jenis_persalinan'];
         $this->lahir = $persalinan['lahir'];
         $this->jenkel = $persalinan['jenkel'];
@@ -114,17 +135,37 @@ class PersalinanIndex extends Component
 
     public function deletePersalinan($persalinanId){
         $data = Persalinan::find($persalinanId);
-        $data->delete();
+        $data->update([
+            'status' => '1',
+            'users_id' => $this->users_id
+        ]);
         $this->resetInput();
         $this->emit('persalinanDeleted');
     }
 
     public function update(){
+        $message = [
+            'max' => 'Maksimal hanya :max karakter',
+            'numeric' => 'Inputan harus berupa angka',
+            'date' => 'Inputan harus berupa tanggal',
+            'required' => 'Inputan tidak boleh kosong'
+        ];
         $this->validate([
-            'tgl_lahir' => 'required',
-            'jam_lahir' => 'required',
-            'hamil_ke' => 'required'
-        ]);
+            "anc_ke" => 'max:254|numeric|nullable',
+            "rujuk" => 'max:30',
+            "tgl_lahir" => 'required|date',
+            "jam_lahir" => 'required|max:30',
+            "hamil_ke" => 'required|max:254|numeric',
+            "umur_hamil" => 'required|max:10',
+            "letak_janin" => 'required|max:10',
+            "jenis_persalinan" => 'required|max:10',
+            "lahir" => 'required|max:1',
+            "jenkel" => 'required|max:1',
+            "kembar" => 'required|max:30',
+            "bb" => 'required|max:65500|numeric',
+            "pb" => 'required|max:254|numeric',
+            "lk" => 'required|max:254|numeric'
+        ], $message);
 
         if(!empty($this->persalinanId)){
             $persalinan = Persalinan::find($this->persalinanId);

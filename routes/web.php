@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/dashboard', 'DashboardController@index');
+    Route::get('/jumlah', 'DashboardController@laporan');
     Route::get('/users','UsersController@index');
+    Route::post('/users/store','UsersController@store');
 });
 
 Route::group(['middleware' => ['role:admin|user']], function(){
@@ -33,10 +36,12 @@ Route::group(['middleware' => ['role:admin|user']], function(){
     Route::get('/imunisasi', 'ImunisasiController@index');
     Route::get('/kb', 'KbController@index');
     Route::get('/pemeriksaan','PeriksaController@index');
-    Route::get('/pasien/{d}/detail', 'PasienController@detail');
+    Route::get('/pasien/{id}','PasienController@detail');
     Route::post('/pasien/edit', 'PasienController@edit');
     Route::get('account/password','AccountController@password')->name('password.edit');
     Route::patch('account/password','AccountController@update')->name('password.edit');
+    Route::post('/pasien/notification', 'PasienController@notification');
+    Route::get('/printkb','KbController@print');
 });
     
 

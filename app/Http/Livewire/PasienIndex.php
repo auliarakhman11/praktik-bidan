@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Pasien;
+use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -35,7 +36,7 @@ class PasienIndex extends Component
     {
         return view('livewire.pasien-index',[
             'pasien' => empty($this->search) ?
-             Pasien::select('id','kd_pasien','nik_ayah','nik_ibu','nm_ayah','nm_ibu','no_tlpn','alamat','created_at')->orderBy('id','desc')->paginate($this->paginate) :
+             Pasien::select('id','kd_pasien','nik_ayah','nik_ibu','nm_ayah','nm_ibu','no_tlpn','alamat','created_at')->where('status', '0')->orderBy('id','desc')->paginate($this->paginate) :
              Pasien::select('id','kd_pasien','nik_ayah','nik_ibu','nm_ayah','nm_ibu','no_tlpn','alamat','created_at')->where('kd_pasien','like', '%'.$this->search.'%')
              ->orWhere('nik_ibu','like', '%'.$this->search.'%')
              ->orWhere('nm_ibu','like', '%'.$this->search.'%')
@@ -47,6 +48,13 @@ class PasienIndex extends Component
     }
 
     public function store(){
+
+        $messages = [
+            'nm_ibu.required' => 'Nama ibu harus diisi',
+            'max' => 'Maksimal hanya 30 karakter',
+            'no_tlpn.max' => 'Nomor telephon maksimal 13 karakter'
+        ];
+
         $this->validate([
             'nm_ayah' => 'max:30',
             'nik_ayah' => 'max:30',
@@ -54,7 +62,7 @@ class PasienIndex extends Component
             'nm_ibu' => 'required|min:3|max:30',
             'no_tlpn' => 'max:13',
             'alamat' => 'max:30',
-        ]);
+        ], $messages);
 
         Pasien::create([
             "nik_ayah" => $this->nik_ayah,
@@ -97,11 +105,19 @@ class PasienIndex extends Component
 
     public function deletePasien($pasienId){
         $data = Pasien::find($pasienId);
-        $data->delete();
+        $data->update([
+            'status' => '1'
+        ]);
         $this->emit('pasienDeleted'); 
     }
     
     public function update(){
+        $messages = [
+            'nm_ibu.required' => 'Nama ibu harus diisi',
+            'max' => 'Maksimal hanya 30 karakter',
+            'no_tlpn.max' => 'Nomor telephon maksimal 13 karakter'
+        ];
+
         $this->validate([
             'nm_ayah' => 'max:30',
             'nik_ayah' => 'max:30',
@@ -109,11 +125,11 @@ class PasienIndex extends Component
             'nm_ibu' => 'required|min:3|max:30',
             'no_tlpn' => 'max:13',
             'alamat' => 'max:30',
-        ]);
+        ], $messages);
         
         if($this->pasienId){
-            $contact = Pasien::find($this->pasienId);
-            $contact->update([
+            $data = Pasien::find($this->pasienId);
+            $data->update([
             "nik_ayah" => $this->nik_ayah,
             "nik_ibu" => $this->nik_ibu,
             "nm_ayah" => $this->nm_ayah,

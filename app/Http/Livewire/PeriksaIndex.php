@@ -40,21 +40,43 @@ class PeriksaIndex extends Component
                 'nm_ayah' => $this->nm_ayah,
                 'no_tlpn' => $this->no_tlpn,
                 'alamat' => $this->alamat,
-                'periksa' => Periksa::select('id','no_kk','g','p','a','hpht','bb','td','tb','li_la','hb','tt','gol_darah','kb_sebelum_hamil','riwayat_penyakit','riwayat_alergi','jarak_kehamilan','created_at')->where('pasien_id', $this->pasienId)->orderBy('id','desc')->paginate($this->paginate)
+                'periksa' => Periksa::select('id','no_kk','g','p','a','hpht','bb','td','tb','li_la','hb','tt','gol_darah','kb_sebelum_hamil','riwayat_penyakit','riwayat_alergi','jarak_kehamilan','created_at')->where([['pasien_id','=', $this->pasienId],['pemeriksaan.status','=','0']])->orderBy('id','desc')->paginate($this->paginate)
             ]);
         }else{
             return view('livewire.periksa-index', [
-                'periksa' => Periksa::join('pasien', 'pasien.id', '=', 'pemeriksaan.pasien_id')->select('pemeriksaan.id','kd_pasien','nm_ibu','no_kk','g','p','a','hpht','bb','td','tb','li_la','hb','tt','gol_darah','kb_sebelum_hamil','riwayat_penyakit','riwayat_alergi','jarak_kehamilan','pemeriksaan.created_at')->where('kd_pasien','like', '%'.$this->search.'%')->orWhere('nm_ibu','like', '%'.$this->search.'%')->orWhere('nm_ayah','like', '%'.$this->search.'%')->orderBy('pemeriksaan.id','desc')->paginate($this->paginate)
+                'periksa' => empty($this->search) ?
+                 Periksa::join('pasien', 'pasien.id', '=', 'pemeriksaan.pasien_id')->select('pemeriksaan.id','kd_pasien','nm_ibu','no_kk','g','p','a','hpht','bb','td','tb','li_la','hb','tt','gol_darah','kb_sebelum_hamil','riwayat_penyakit','riwayat_alergi','jarak_kehamilan','pemeriksaan.created_at')->where('pemeriksaan.status','0')->orderBy('pemeriksaan.id','desc')->paginate($this->paginate):
+                 Periksa::join('pasien', 'pasien.id', '=', 'pemeriksaan.pasien_id')->select('pemeriksaan.id','kd_pasien','nm_ibu','no_kk','g','p','a','hpht','bb','td','tb','li_la','hb','tt','gol_darah','kb_sebelum_hamil','riwayat_penyakit','riwayat_alergi','jarak_kehamilan','pemeriksaan.created_at')
+                 ->where('kd_pasien','like', '%'.$this->search.'%')->orWhere('nm_ibu','like', '%'.$this->search.'%')->orWhere('nm_ayah','like', '%'.$this->search.'%')->orderBy('pemeriksaan.id','desc')->paginate($this->paginate)
             ]);
         }
         
     }
 
     public function store(){
+        $message = [
+            'max' => 'Maksimal hanya :max karakter',
+            'numeric' => 'Inputan harus berupa angka',
+            'required' => 'Inputan tidak boleh kosong'
+        ];
         $this->validate([
-            'no_kk' => 'required',
-            'kb_sebelum_hamil' => 'required'
-        ]);
+            'no_kk' => 'max:254|numeric|nullable',
+            'g' => 'required|numeric|max:254',
+            'p' => 'required|numeric|max:254',
+            'a' => 'required|numeric|max:254',
+            'hpht' => 'required|max:128',
+            'bb' => 'required|numeric|max:254',
+            'td' => 'required|max:10',
+            'tb' => 'max:254|numeric|nullable',
+            'li_la' => 'max:10',
+            'hb' => 'max:10',
+            'tt' => 'max:254|numeric|nullable',
+            'gol_darah' => 'max:2',
+            'kb_sebelum_hamil' => 'required|max:30',
+            'riwayat_penyakit' => 'max:30',
+            'riwayat_alergi' => 'max:30',
+            'jarak_kehamilan' => 'max:30'
+        ],$message);
 
         Periksa::create([
             "users_id" => $this->users_id,
@@ -123,16 +145,38 @@ class PeriksaIndex extends Component
 
     public function deletePeriksa($periksaId){
         $data = Periksa::find($periksaId);
-        $data->delete();
+        $data->update([
+            'status' => '1',
+            'users_id' => $this->users_id
+        ]);
         $this->resetInput();
         $this->emit('periksaDeleted'); 
     }
 
     public function update(){
+        $message = [
+            'max' => 'Maksimal hanya :max karakter',
+            'numeric' => 'Inputan harus berupa angka',
+            'required' => 'Inputan tidak boleh kosong'
+        ];
         $this->validate([
-            'no_kk' => 'required',
-            'kb_sebelum_hamil' => 'required'
-        ]);
+            'no_kk' => 'numeric|nullable',
+            'g' => 'required|numeric|max:254',
+            'p' => 'required|numeric|max:254',
+            'a' => 'required|numeric|max:254',
+            'hpht' => 'required|max:128',
+            'bb' => 'required|numeric|max:254',
+            'td' => 'required|max:10',
+            'tb' => 'max:254|numeric|nullable',
+            'li_la' => 'max:10',
+            'hb' => 'max:10',
+            'tt' => 'max:254|numeric|nullable',
+            'gol_darah' => 'max:2',
+            'kb_sebelum_hamil' => 'required|max:30',
+            'riwayat_penyakit' => 'max:30',
+            'riwayat_alergi' => 'max:30',
+            'jarak_kehamilan' => 'max:30'
+        ],$message);
         
         if(!empty($this->periksaId)){
             $periksa = Periksa::find($this->periksaId);

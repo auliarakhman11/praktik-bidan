@@ -11,9 +11,6 @@
         <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#insertpasien">
             Tambah Data
            </button>
-           <button wire:click="$refresh" type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#insertpasien">
-            Refresh
-           </button>
            
         <div class="row">
             <div class="col">
@@ -57,11 +54,15 @@
                 <td scope="row">{{ $d->alamat }}</td>
                 {{-- <td scope="row">{{ date_format($d->created_at, 'd-m-Y') }}</td> --}}
                 <td scope="row">
-                    <button wire:click="getPasien({{ $d->id }}) type="button" class="btn btn-sm btn-info text-light mb-1" data-toggle="modal" data-target="#updatePasien">
+                    @php
+                    $id = Crypt::encrypt($d->id);
+                    @endphp
+                    <button wire:click="getPasien({{ $d->id }})" type="button" class="btn btn-sm btn-info text-light mb-1" data-toggle="modal" data-target="#updatePasien">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <a href="/pasien/{{$d->id}}/detail" class="btn btn-sm btn-primary text-light mb-1"><i class="fas fa-search"></i></a>
-                    <button wire:click="getPasien({{ $d->id }}) type="button" class="btn btn-sm btn-danger text-light mb-1" data-toggle="modal" data-target="#delete">
+
+                    <a href="/pasien/{{ $id }}" class="btn btn-sm btn-primary text-light mb-1"><i class="fas fa-search"></i></a>
+                    <button wire:click="getPasien({{ $d->id }})" type="button" class="btn btn-sm btn-danger text-light mb-1" data-toggle="modal" data-target="#delete">
                         <i class="fas fa-trash"></i>
                     </button>
                 </td>
@@ -92,7 +93,7 @@
                                     <label for="exampleFormControlInput2" class="text-purple">NIK Ayah</label>
                                     <input wire:model="nik_ayah" type="number" name="nik_ayah" id="" class="form-control border-primary text-purple @error('nik_ayah') is-invalid @enderror" placeholder="NIK Ayah">
                                      @error('nik_ayah')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -103,7 +104,7 @@
                                     <label for="exampleFormControlInput1" class="text-purple">Nama Ayah</label>
                                     <input wire:model="nm_ayah" type="text" name="nm_ayah" id="" class="form-control border-primary text-purple @error('nm_ayah') is-invalid @enderror" placeholder="Nama Ayah">
                                      @error('nm_ayah')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -114,7 +115,7 @@
                                     <label for="exampleFormControlInput1" class="text-purple">NIK Ibu</label>
                                     <input wire:model="nik_ibu" type="number" name="nik_ibu" id="" class="form-control border-primary text-purple @error('nik_ibu') is-invalid @enderror" placeholder="NIK Ibu">
                                      @error('nik_ibu')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -125,7 +126,7 @@
                                     <label for="exampleFormControlInput1" class="text-purple">Nama Ibu</label>
                                     <input wire:model="nm_ibu" type="text" name="nm_ibu" id="" class="form-control border-primary text-purple @error('nm_ibu') is-invalid @enderror" placeholder="NAMA Ibu">
                                      @error('nm_ibu')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -136,7 +137,7 @@
                                     <label for="exampleFormControlInput1" class="text-purple">Tanggal Lahir Ayah</label>
                                     <input wire:model="tgl_lahir_ayah" type="date" name="tgl_lahir_ayah" id="" class="form-control border-primary text-purple @error('tgl_lahir_ayah') is-invalid @enderror" placeholder="Tanggal Lahir Ayah">
                                      @error('tgl_lahir_ayah')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -147,7 +148,7 @@
                                     <label for="exampleFormControlInput1" class="text-purple">Tanggal Lahir Ibu</label>
                                     <input wire:model="tgl_lahir_ibu" type="date" name="tgl_lahir_ibu" id="" class="form-control border-primary text-purple @error('tgl_lahir_ibu') is-invalid @enderror" placeholder="Tanggal Lahir Ibu">
                                      @error('tgl_lahir_ibu')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -158,7 +159,7 @@
                                     <label for="exampleFormControlInput1" class="text-purple">Nomor Telepon</label>
                                     <input wire:model="no_tlpn" type="number" name="no_tlpn" id="" class="form-control border-primary text-purple @error('no_tlpn') is-invalid @enderror" placeholder="Nomor Telepon">
                                      @error('no_tlpn')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -169,7 +170,7 @@
                                     <label for="exampleFormControlInput1" class="text-purple">Alamat</label>
                                     <input wire:model="alamat" type="text" name="alamat" id="" class="form-control border-primary text-purple @error('alamat') is-invalid @enderror" placeholder="Alamat">
                                      @error('alamat')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -255,7 +256,7 @@
                                  <label for="exampleFormControlInput2">NIK Ayah</label>
                                  <input wire:model="nik_ayah" type="number" name="nik_ayah" id="" class="form-control @error('nik_ayah') is-invalid @enderror" placeholder="NIK Ayah">
                                   @error('nik_ayah')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror
@@ -266,7 +267,7 @@
                                  <label for="exampleFormControlInput1">Nama Ayah</label>
                                  <input wire:model="nm_ayah" type="text" name="nm_ayah" id="" class="form-control @error('nm_ayah') is-invalid @enderror" placeholder="Nama Ayah">
                                   @error('nm_ayah')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror
@@ -277,7 +278,7 @@
                                  <label for="exampleFormControlInput1">NIK Ibu</label>
                                  <input wire:model="nik_ibu" type="number" name="nik_ibu" id="" class="form-control @error('nik_ibu') is-invalid @enderror" placeholder="NIK Ibu">
                                   @error('nik_ibu')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror
@@ -288,7 +289,7 @@
                                  <label for="exampleFormControlInput1">Nama Ibu</label>
                                  <input wire:model="nm_ibu" type="text" name="nm_ibu" id="" class="form-control @error('nm_ibu') is-invalid @enderror" placeholder="NAMA Ibu">
                                   @error('nm_ibu')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror
@@ -299,7 +300,7 @@
                                  <label for="exampleFormControlInput1">Tanggal Lahir Ayah</label>
                                  <input wire:model="tgl_lahir_ayah" type="date" name="tgl_lahir_ayah" id="" class="form-control @error('tgl_lahir_ayah') is-invalid @enderror" placeholder="Tanggal Lahir Ayah">
                                   @error('tgl_lahir_ayah')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror
@@ -310,7 +311,7 @@
                                  <label for="exampleFormControlInput1">Tanggal Lahir Ibu</label>
                                  <input wire:model="tgl_lahir_ibu" type="date" name="tgl_lahir_ibu" id="" class="form-control @error('tgl_lahir_ibu') is-invalid @enderror" placeholder="Tanggal Lahir Ibu">
                                   @error('tgl_lahir_ibu')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror
@@ -321,7 +322,7 @@
                                  <label for="exampleFormControlInput1">Nomor Telepon</label>
                                  <input wire:model="no_tlpn" type="number" name="no_tlpn" id="" class="form-control @error('no_tlpn') is-invalid @enderror" placeholder="Nomor Telepon">
                                   @error('no_tlpn')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror
@@ -332,7 +333,7 @@
                                  <label for="exampleFormControlInput1">Alamat</label>
                                  <input wire:model="alamat" type="text" name="alamat" id="" class="form-control @error('alamat') is-invalid @enderror" placeholder="Alamat">
                                   @error('alamat')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror

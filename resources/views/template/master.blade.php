@@ -13,6 +13,7 @@
   {{-- <!-- SweetAlert2 -->
   <link rel="stylesheet" href="{{asset('adminlte')}}/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"> --}}
   @yield('swalcss')
+  @yield('chart_header')
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{{asset('adminlte')}}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
@@ -57,6 +58,7 @@
 <!-- overlayScrollbars -->
 <script src="{{asset('adminlte')}}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 @yield('swaljs')
+@yield('chart_footer')
 {{-- <!-- SweetAlert2 -->
 <script src="{{asset('adminlte')}}/plugins/sweetalert2/sweetalert2.min.js"></script> --}}
 <!-- AdminLTE App -->

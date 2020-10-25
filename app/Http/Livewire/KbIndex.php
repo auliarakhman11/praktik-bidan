@@ -39,21 +39,37 @@ class KbIndex extends Component
                 'nm_ayah' => $this->nm_ayah,
                 'no_tlpn' => $this->no_tlpn,
                 'alamat' => $this->alamat,
-                'kb' => Kb::select('id', 'askeptor', 'umur_ibu', 'umur_ayah', 'jml_anak', 'jns_kontrasepsi', 'post_partum', 'ket', 'created_at')->where('pasien_id', $this->pasienId)->orderBy('id', 'desc')->paginate($this->paginate)
+                'kb' => Kb::select('id', 'askeptor', 'umur_ibu', 'umur_ayah', 'jml_anak', 'jns_kontrasepsi', 'post_partum', 'ket', 'created_at')->where([['pasien_id','=', $this->pasienId],['kb.status','=','0']])->orderBy('id', 'desc')->paginate($this->paginate)
             ]);
         }else{
             return view('livewire.kb-index', [
-                'kb' => Kb::join('pasien', 'pasien.id', '=', 'kb.pasien_id')->select('kb.id', 'nm_ibu','kd_pasien', 'askeptor', 'umur_ibu', 'umur_ayah', 'jml_anak', 'jns_kontrasepsi', 'post_partum', 'ket', 'kb.created_at')->where('kd_pasien','like', '%'.$this->search.'%')->orWhere('nm_ibu','like', '%'.$this->search.'%')->orWhere('nm_ayah','like', '%'.$this->search.'%')->orderBy('kb.id', 'desc')->paginate($this->paginate)
+                'kb' => empty($this->search) ?
+                 Kb::join('pasien', 'pasien.id', '=', 'kb.pasien_id')->select('kb.id', 'nm_ibu','kd_pasien', 'askeptor', 'umur_ibu', 'umur_ayah', 'jml_anak', 'jns_kontrasepsi', 'post_partum', 'ket', 'kb.created_at')
+                 ->where('kb.status','0')
+                 ->orderBy('kb.id', 'desc')->paginate($this->paginate):
+                 Kb::join('pasien', 'pasien.id', '=', 'kb.pasien_id')->select('kb.id', 'nm_ibu','kd_pasien', 'askeptor', 'umur_ibu', 'umur_ayah', 'jml_anak', 'jns_kontrasepsi', 'post_partum', 'ket', 'kb.created_at')
+                 ->where('kd_pasien','like', '%'.$this->search.'%')->orWhere('nm_ibu','like', '%'.$this->search.'%')->orWhere('nm_ayah','like', '%'.$this->search.'%')->orderBy('kb.id', 'desc')->paginate($this->paginate)
             ]);
         }
     }
 
     public function store(){
+        $message = [
+            'required' => 'Inputan tidak boleh kosong',
+            'max' => 'Maksimal hanya :max karakter',
+            'numeric' => 'Inputan harus berupa angka',
+        ];
+
         $this->validate([
-            'jml_anak' => 'required',
             'jns_kontrasepsi' => 'required',
-            'askeptor' => 'required'
-        ]);
+            'askeptor' => 'required|max:4',
+            'umur_ayah' => 'nullable|numeric|max:254',
+            'umur_ibu' => 'nullable|numeric|max:254',
+            'jml_anak' => 'nullable|numeric|max:254',
+            'jns_kontrasepsi' => 'required|max:20',
+            'post_partum' => 'max:20',
+            'ket' => 'max:20'
+        ],$message);
 
         Kb::create([
             "users_id" => $this->users_id,
@@ -96,17 +112,31 @@ class KbIndex extends Component
 
     public function deleteKb($kbId){
         $data = Kb::find($kbId);
-        $data->delete();
+        $data->update([
+            'status' => '1',
+            'users_id' => $this->users_id
+        ]);
         $this->resetInput();
         $this->emit('kbDeleted'); 
     }
 
     public function update(){
+        $message = [
+            'required' => 'Inputan tidak boleh kosong',
+            'max' => 'Maksimal hanya :max karakter',
+            'numeric' => 'Inputan harus berupa angka',
+        ];
+
         $this->validate([
-            'jml_anak' => 'required',
             'jns_kontrasepsi' => 'required',
-            'askeptor' => 'required'
-        ]);
+            'askeptor' => 'required|max:4',
+            'umur_ayah' => 'nullable|numeric|max:254',
+            'umur_ibu' => 'nullable|numeric|max:254',
+            'jml_anak' => 'nullable|numeric|max:254',
+            'jns_kontrasepsi' => 'required|max:20',
+            'post_partum' => 'max:20',
+            'ket' => 'max:20'
+        ],$message);
         
         if(!empty($this->kbId)){
             $kb = Kb::find($this->kbId);

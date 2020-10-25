@@ -138,7 +138,7 @@
                                     <label for="exampleFormControlInput2" class="text-purple">Umur Ayah</label>
                                     <input wire:model="umur_ayah" type="number" name="umur_ayah" id="" class="form-control border-primary text-purple @error('umur_ayah') is-invalid @enderror" placeholder="Umur Ayah">
                                      @error('umur_ayah')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -149,7 +149,7 @@
                                     <label for="exampleFormControlInput1" class="text-purple">Umur Ibu</label>
                                     <input wire:model="umur_ibu" type="number" name="umur_ibu" id="" class="form-control border-primary text-purple @error('umur_ibu') is-invalid @enderror" placeholder="Umur Ibu">
                                      @error('umur_ibu')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -164,7 +164,7 @@
                                         <option value="Lama">Lama</option>
                                       </select>
                                      @error('askeptor')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -183,7 +183,7 @@
                                         <option value="Implant">Implant</option>
                                       </select>
                                      @error('jns_kontrasepsi')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -194,7 +194,7 @@
                                     <label for="exampleFormControlInput1" class="text-purple">Jumlah Anak</label>
                                     <input wire:model="jml_anak" type="number" name="jml_anak" id="" class="form-control border-primary text-purple @error('jml_anak') is-invalid @enderror" placeholder="Jumlah Anak">
                                      @error('jml_anak')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -205,7 +205,7 @@
                                     <label for="exampleFormControlInput1" class="text-purple">Post Partum</label>
                                     <input wire:model="post_partum" type="text" name="post_partum" id="" class="form-control border-primary text-purple @error('post_partum') is-invalid @enderror" placeholder="Post Partum">
                                      @error('post_partum')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -216,7 +216,7 @@
                                     <label for="exampleFormControlInput1" class="text-purple">Keterangan</label>
                                     <input wire:model="ket" type="text" name="ket" id="" class="form-control border-primary text-purple @error('ket') is-invalid @enderror" placeholder="Keterangan">
                                      @error('ket')
-                                         <span class="invalid feedback">
+                                         <span class="invalid-feedback">
                                              <strong>{{ $message }}</strong>
                                          </span>
                                      @enderror
@@ -302,7 +302,7 @@
                                  <label for="exampleFormControlInput2" class="text-purple">Umur Ayah</label>
                                  <input wire:model="umur_ayah" type="number" name="umur_ayah" id="" class="form-control border-primary text-purple @error('umur_ayah') is-invalid @enderror" placeholder="Umur Ayah">
                                   @error('umur_ayah')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror
@@ -313,7 +313,7 @@
                                  <label for="exampleFormControlInput1" class="text-purple">Umur Ibu</label>
                                  <input wire:model="umur_ibu" type="number" name="umur_ibu" id="" class="form-control border-primary text-purple @error('umur_ibu') is-invalid @enderror" placeholder="Umur Ibu">
                                   @error('umur_ibu')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror
@@ -327,7 +327,7 @@
                                      <option value="Lama">Lama</option>
                                    </select>
                                   @error('askeptor')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror
@@ -345,7 +345,7 @@
                                      <option value="Implant">Implant</option>
                                    </select>
                                   @error('jns_kontrasepsi')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror
@@ -356,7 +356,7 @@
                                  <label for="exampleFormControlInput1" class="text-purple">Jumlah Anak</label>
                                  <input wire:model="jml_anak" type="number" name="jml_anak" id="" class="form-control border-primary text-purple @error('jml_anak') is-invalid @enderror" placeholder="Jumlah Anak">
                                   @error('jml_anak')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror
@@ -367,7 +367,7 @@
                                  <label for="exampleFormControlInput1" class="text-purple">Post Partum</label>
                                  <input wire:model="post_partum" type="text" name="post_partum" id="" class="form-control border-primary text-purple @error('post_partum') is-invalid @enderror" placeholder="Post Partum">
                                   @error('post_partum')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror
@@ -378,7 +378,7 @@
                                  <label for="exampleFormControlInput1" class="text-purple">Keterangan</label>
                                  <input wire:model="ket" type="text" name="ket" id="" class="form-control border-primary text-purple @error('ket') is-invalid @enderror" placeholder="Keterangan">
                                   @error('ket')
-                                      <span class="invalid feedback">
+                                      <span class="invalid-feedback">
                                           <strong>{{ $message }}</strong>
                                       </span>
                                   @enderror
