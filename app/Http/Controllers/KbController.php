@@ -30,7 +30,20 @@ class KbController extends Controller
 
     public function print()
     {
-        $pdf = PDF::loadView('user.printkb')->setPaper('A4','landscape');
+        $message = [
+            'numeric' => 'Inputan harus berupa angka',
+            'required' => 'Inputan tidak boleh kosong'
+        ];
+        request()->validate([
+            'bulan' => 'required',
+            'tahun' => 'required|numeric'
+        ],$message);
+        $kb = Kb::join('pasien', 'kb.pasien_id', '=' ,'pasien.id')
+        ->select('askeptor','kb.created_at','nm_ibu','umur_ibu','nm_ayah','umur_ayah','jml_anak','jns_kontrasepsi','post_partum','alamat','no_tlpn')
+        ->whereYear('kb.created_at', request('tahun'))
+        ->whereMonth('kb.created_at', request('bulan'))
+        ->get();
+        $pdf = PDF::loadView('user.printkb', ['kb' => $kb])->setPaper('A4','landscape');
         return $pdf->stream();
     }
 

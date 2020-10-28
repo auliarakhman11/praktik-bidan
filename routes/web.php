@@ -41,7 +41,10 @@ Route::group(['middleware' => ['role:admin|user']], function(){
     Route::get('account/password','AccountController@password')->name('password.edit');
     Route::patch('account/password','AccountController@update')->name('password.edit');
     Route::post('/pasien/notification', 'PasienController@notification');
-    Route::get('/printkb','KbController@print');
+    Route::post('/printkb','KbController@print')->name('print.kb');
+    Route::post('/printimunisasi','ImunisasiController@print')->name('print.imunisasi');
+    Route::post('/printpersalinan','PersalinanController@print')->name('print.persalinan');
+    Route::post('/printpemeriksaan','PeriksaController@print')->name('print.pemeriksaan');
 });
     
 
